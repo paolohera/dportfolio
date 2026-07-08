@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scrollbar-color: #b8b09a #e4e0d6;
+}
+
+body {
+  background-color: #e4e0d6;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(154, 145, 122, 0.14) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}
+
+::selection {
+  background: #47605c;
+  color: #ede9de;
+}
+
+/* Visible keyboard focus everywhere — accessibility floor */
+:focus-visible {
+  outline: 2px solid #47605c;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.clay-input {
+  @apply w-full rounded-clay-sm bg-clay-bg px-4 py-3 text-ink placeholder:text-ink-soft/60 shadow-clay-pressed border-none;
+}
+
+.clay-input:focus {
+  box-shadow: inset 4px 4px 8px rgba(154, 145, 122, 0.55), inset -4px -4px 8px
+      rgba(255, 255, 255, 0.55), 0 0 0 2px #47605c;
+}
