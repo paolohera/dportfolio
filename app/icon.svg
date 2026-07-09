@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <path
+    fill="#47605C"
+    d="M24.2,23.9 Q23.4,29.5 16.8,28.9 Q9.6,28.2 6.9,23.2 Q4.2,17.6 7.7,12 Q11.2,6.2 17.6,5.8 Q24,5.3 26.6,11.2 Q28.7,16.8 24.2,23.9 Z"
+  />
+  <text
+    x="16"
+    y="21"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-style="italic"
+    font-weight="600"
+    font-size="15"
+    fill="#EDE9DE"
+    text-anchor="middle"
+  >P</text>
+</svg>

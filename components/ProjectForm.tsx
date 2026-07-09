@@ -5,6 +5,7 @@ import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import type { Project } from "@/lib/types";
 import ClayButton from "./ClayButton";
+import TechStackPicker from "./TechStackPicker";
 
 const BUCKET = "project-images";
 
@@ -21,7 +22,7 @@ export default function ProjectForm({
   const [description, setDescription] = useState(project?.description ?? "");
   const [demoUrl, setDemoUrl] = useState(project?.demo_url ?? "");
   const [repoUrl, setRepoUrl] = useState(project?.repo_url ?? "");
-  const [tags, setTags] = useState(project?.tags?.join(", ") ?? "");
+  const [tags, setTags] = useState<string[]>(project?.tags ?? []);
   const [imageUrl, setImageUrl] = useState(project?.image_url ?? "");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(project?.image_url ?? "");
@@ -67,10 +68,7 @@ export default function ProjectForm({
         image_url: finalImageUrl || null,
         demo_url: demoUrl.trim() || null,
         repo_url: repoUrl.trim() || null,
-        tags: tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean),
+        tags,
       };
 
       if (project) {
@@ -110,7 +108,7 @@ export default function ProjectForm({
         <div className="flex items-center gap-4">
           <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-clay-sm bg-clay-deep shadow-clay-pressed">
             {previewUrl ? (
-              <Image src={previewUrl} alt="" fill className="object-cover" />
+              <Image src={previewUrl} alt="" fill sizes="128px" className="object-cover" />
             ) : null}
           </div>
           <label className="cursor-pointer rounded-clay-sm bg-clay-bg px-4 py-2 text-sm font-medium text-ink-soft shadow-clay-raised-sm hover:text-ink">
@@ -184,16 +182,10 @@ export default function ProjectForm({
       </div>
 
       <div>
-        <label htmlFor="tags" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
-          Tags (comma separated)
-        </label>
-        <input
-          id="tags"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          className="clay-input"
-          placeholder="Next.js, Supabase, Design"
-        />
+        <p className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          Tags
+        </p>
+        <TechStackPicker value={tags} onChange={setTags} />
       </div>
 
       {error && (

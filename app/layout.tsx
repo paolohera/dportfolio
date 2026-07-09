@@ -25,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Paolo",
   description: "A hand-shaped collection of work.",
 };
 

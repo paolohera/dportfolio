@@ -2,17 +2,17 @@ import Image from "next/image";
 import type { Project } from "@/lib/types";
 import TechBadge from "./TechBadge";
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function FeaturedProject({ project }: { project: Project }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-clay bg-clay-surface shadow-clay-raised transition-transform duration-200 ease-out hover:-translate-y-1">
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-clay-deep">
+    <article className="group grid grid-cols-1 gap-0 overflow-hidden rounded-clay bg-clay-surface shadow-clay-raised sm:grid-cols-2">
+      <div className="relative aspect-[16/11] w-full overflow-hidden bg-clay-deep sm:aspect-auto">
         {project.image_url ? (
           <Image
             src={project.image_url}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center font-mono text-xs text-ink-soft">
@@ -21,12 +21,16 @@ export default function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 p-7">
-        <h3 className="font-display text-2xl font-medium tracking-tight text-ink">
+      <div className="flex flex-col justify-center gap-4 p-8 sm:p-10">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
+          Latest piece
+        </p>
+
+        <h3 className="font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
           {project.title}
         </h3>
 
-        <p className="flex-1 text-[15px] leading-relaxed text-ink-soft">
+        <p className="text-[15px] leading-relaxed text-ink-soft">
           {project.description}
         </p>
 
@@ -38,7 +42,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           </ul>
         )}
 
-        <div className="flex items-center gap-3 pt-1">
+        <div className="flex items-center gap-3 pt-2">
           {project.demo_url && (
             <a
               href={project.demo_url}
