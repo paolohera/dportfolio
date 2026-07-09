@@ -1,4 +1,12 @@
-export default function Hero() {
+import ContactButton from "./ContactButton";
+
+export default function Hero({
+  showContact,
+  onContactClick,
+}: {
+  showContact?: boolean;
+  onContactClick?: () => void;
+}) {
   return (
     <header className="relative mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
       {/* Signature: an organic clay blob sitting behind the headline, like a
@@ -15,9 +23,12 @@ export default function Hero() {
       </svg>
 
       <div className="relative">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink-soft">
-          Selected Work — 2023 / 2026
-        </p>
+        <div className="flex items-center justify-between gap-4">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink-soft">
+            Selected Work — 2023 / 2026
+          </p>
+          {showContact && <ContactButton onClick={onContactClick!} />}
+        </div>
 
         <h1 className="mt-6 max-w-3xl font-display text-5xl font-medium leading-[1.05] tracking-tight text-ink sm:text-7xl">
           Things I&apos;ve

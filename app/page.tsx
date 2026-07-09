@@ -11,6 +11,7 @@ import Reveal from "@/components/Reveal";
 import ProjectGrid from "@/components/ProjectGrid";
 import AdminLoginModal from "@/components/AdminLoginModal";
 import AdminDashboard from "@/components/AdminDashboard";
+import ContactModal from "@/components/ContactModal";
 import ClayButton from "@/components/ClayButton";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [showContact, setShowContact] = useState(false);
 
   const loadProjects = useCallback(async () => {
     const { data, error } = await supabase
@@ -60,7 +62,10 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
-      <Hero />
+      <Hero
+        showContact={!!profile?.email}
+        onContactClick={() => setShowContact(true)}
+      />
       <Reveal>
         <About profile={profile} />
       </Reveal>
@@ -79,6 +84,13 @@ export default function Home() {
         >
           Edit portfolio
         </button>
+      )}
+
+      {showContact && profile?.email && (
+        <ContactModal
+          fallbackEmail={profile.email}
+          onClose={() => setShowContact(false)}
+        />
       )}
 
       {showLogin && (

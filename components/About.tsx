@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Profile } from "@/lib/types";
 import TechBadge from "./TechBadge";
+import EmailLink from "./EmailLink";
 
 export default function About({ profile }: { profile: Profile | null }) {
   if (!profile) return null;
@@ -85,12 +86,10 @@ export default function About({ profile }: { profile: Profile | null }) {
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm text-ink-soft">
             {profile.email && (
               <li>
-                <a
-                  href={`mailto:${profile.email}`}
+                <EmailLink
+                  email={profile.email}
                   className="underline decoration-clay-line underline-offset-4 hover:text-ink"
-                >
-                  {profile.email}
-                </a>
+                />
               </li>
             )}
             {profile.github_url && (
