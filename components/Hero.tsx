@@ -31,14 +31,24 @@ export default function Hero({
         </div>
 
         <h1 className="mt-6 max-w-3xl font-display text-5xl font-medium leading-[1.05] tracking-tight text-ink sm:text-7xl">
-          Things I&apos;ve
-          <br />
-          <span className="italic text-accent">shaped</span> by hand.
+          Hands of <span className="italic text-accent">Code</span>.
         </h1>
 
-        <p className="mt-8 max-w-md text-lg leading-relaxed text-ink-soft">
-          A working collection of interfaces, tools, and experiments — each
-          one pressed, reworked, and fired until it held its form.
+        <p className="mt-8 max-w-lg whitespace-pre-line font-display text-xl italic leading-relaxed text-ink-soft sm:text-2xl">
+          {`Logic and skill in every line,
+Builds a world so clean, so fine.
+With patience, coffee, and quiet nights,
+The developer's mind ignites.
+
+In every function, care is found,
+In every build, purpose bound.
+Fingers that type and debug with grace,
+Craftsmanship in every trace.
+
+A testament to human skill,
+In the code, the heart's own will.
+Development, a modern art,
+Born of logic and a restless heart.`}
         </p>
       </div>
     </header>

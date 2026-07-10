@@ -20,13 +20,13 @@ export default function About({ profile }: { profile: Profile | null }) {
       </svg>
 
       <div className="relative grid grid-cols-1 gap-10 rounded-clay bg-clay-surface p-8 shadow-clay-raised sm:grid-cols-[auto,1fr] sm:p-10">
-        <div className="relative mx-auto h-32 w-32 shrink-0 overflow-hidden rounded-full bg-clay-deep shadow-clay-pressed sm:mx-0 sm:h-40 sm:w-40">
+        <div className="relative mx-auto h-44 w-32 shrink-0 overflow-hidden rounded-clay bg-clay-deep shadow-clay-pressed sm:mx-0 sm:h-52 sm:w-36">
           {profile.avatar_url ? (
             <Image
               src={profile.avatar_url}
               alt={profile.name}
               fill
-              sizes="160px"
+              sizes="144px"
               className="object-cover"
             />
           ) : (

@@ -129,7 +129,7 @@ export default function Home() {
           />
         </svg>
         <p className="relative font-display text-xl italic text-ink-soft">
-          — fired, and holding its form.
+          — born of logic, and a restless heart.
         </p>
       </div>
 
