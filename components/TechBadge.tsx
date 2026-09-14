@@ -6,27 +6,13 @@ export default function TechBadge({ name }: { name: string }) {
   return (
     <li
       title={name}
-      className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay-bg shadow-clay-pressed"
+      className="inline-flex h-9 items-center gap-1.5 border border-line/40 bg-paper px-2.5 font-mono text-[11px] text-ink-soft"
     >
-      <span className="sr-only">{name}</span>
       {iconUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={iconUrl}
-          alt=""
-          aria-hidden
-          className="h-5 w-5"
-          width={20}
-          height={20}
-        />
-      ) : (
-        <span
-          aria-hidden
-          className="font-mono text-[10px] font-semibold uppercase text-ink-soft"
-        >
-          {name.slice(0, 2)}
-        </span>
-      )}
+        <img src={iconUrl} alt="" aria-hidden className="h-4 w-4" width={16} height={16} />
+      ) : null}
+      {name}
     </li>
   );
 }

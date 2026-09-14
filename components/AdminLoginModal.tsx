@@ -48,7 +48,7 @@ export default function AdminLoginModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-6"
       role="dialog"
       aria-modal="true"
       aria-label="Admin login"
@@ -56,11 +56,9 @@ export default function AdminLoginModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-sm animate-modal-in rounded-clay bg-clay-surface p-8 shadow-clay-raised">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
-          Admin access
-        </p>
-        <h2 className="mt-2 font-display text-2xl font-medium text-ink">
+      <div className="w-full max-w-sm animate-modal-in border-2 border-line bg-paper p-8 shadow-brutal-lg">
+        <p className="font-mono text-[11px] text-ink-soft">Admin access</p>
+        <h2 className="mt-2 font-display text-2xl font-black text-ink">
           Welcome back.
         </h2>
 
@@ -78,7 +76,7 @@ export default function AdminLoginModal({
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="clay-input"
+              className="field-input"
             />
           </div>
 
@@ -94,12 +92,12 @@ export default function AdminLoginModal({
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="clay-input"
+              className="field-input"
             />
           </div>
 
           {error && (
-            <p className="font-mono text-xs text-warm-dark" role="alert">
+            <p className="font-mono text-xs text-accent" role="alert">
               {error}
             </p>
           )}

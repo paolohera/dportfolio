@@ -73,21 +73,15 @@ export default function TechStackPicker({
               type="button"
               onClick={() => toggle(tool)}
               aria-pressed={selected}
-              className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide transition-all ${
+              className={`flex items-center gap-1.5 border px-3 py-1.5 font-mono text-[11px] transition-colors ${
                 selected
-                  ? "bg-accent text-clay-surface shadow-clay-pressed"
-                  : "bg-clay-bg text-ink-soft shadow-clay-raised-sm hover:text-ink"
+                  ? "border-ink bg-ink text-paper"
+                  : "border-line/40 text-ink-soft hover:border-ink hover:text-ink"
               }`}
             >
               {iconUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={iconUrl}
-                  alt=""
-                  className="h-3.5 w-3.5"
-                  width={14}
-                  height={14}
-                />
+                <img src={iconUrl} alt="" className="h-3.5 w-3.5" width={14} height={14} />
               )}
               {tool}
             </button>
@@ -102,7 +96,7 @@ export default function TechStackPicker({
               key={tool}
               type="button"
               onClick={() => toggle(tool)}
-              className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-clay-surface shadow-clay-pressed"
+              className="flex items-center gap-1.5 border border-accent bg-accent px-3 py-1.5 font-mono text-[11px] text-paper"
             >
               {tool}
               <span aria-hidden>×</span>
@@ -122,12 +116,12 @@ export default function TechStackPicker({
             }
           }}
           placeholder="Other — type and press Enter"
-          className="clay-input flex-1"
+          className="field-input flex-1"
         />
         <button
           type="button"
           onClick={addCustom}
-          className="shrink-0 rounded-clay-sm bg-clay-bg px-4 py-2 text-sm font-medium text-ink-soft shadow-clay-raised-sm hover:text-ink"
+          className="brutal-press shrink-0 border-2 border-line bg-paper px-4 py-2 text-sm font-medium text-ink shadow-brutal-sm hover:bg-ink hover:text-paper"
         >
           Add
         </button>

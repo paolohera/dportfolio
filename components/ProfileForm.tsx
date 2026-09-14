@@ -93,23 +93,21 @@ export default function ProfileForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-5 rounded-clay bg-clay-surface p-7 shadow-clay-raised"
+      className="flex flex-col gap-5 border-2 border-line bg-paper p-7"
     >
-      <h3 className="font-display text-xl font-medium text-ink">
-        Edit About section
+      <h3 className="font-display text-xl font-black text-ink">
+        Edit about section
       </h3>
 
       <div>
-        <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
-          Photo
-        </label>
+        <label className="field-label">Photo</label>
         <div className="flex items-center gap-4">
-          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-clay-deep shadow-clay-pressed">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden border-2 border-line bg-paper-alt">
             {previewUrl ? (
               <Image src={previewUrl} alt="" fill sizes="80px" className="object-cover" />
             ) : null}
           </div>
-          <label className="cursor-pointer rounded-clay-sm bg-clay-bg px-4 py-2 text-sm font-medium text-ink-soft shadow-clay-raised-sm hover:text-ink">
+          <label className="brutal-press cursor-pointer border-2 border-line bg-paper px-4 py-2 text-sm font-medium text-ink shadow-brutal-sm hover:bg-ink hover:text-paper">
             Choose file
             <input
               type="file"
@@ -122,7 +120,7 @@ export default function ProfileForm({
       </div>
 
       <div>
-        <label htmlFor="name" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+        <label htmlFor="name" className="field-label">
           Name
         </label>
         <input
@@ -130,12 +128,12 @@ export default function ProfileForm({
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="clay-input"
+          className="field-input"
         />
       </div>
 
       <div>
-        <label htmlFor="bio" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+        <label htmlFor="bio" className="field-label">
           Short intro
         </label>
         <textarea
@@ -144,12 +142,12 @@ export default function ProfileForm({
           rows={3}
           value={bio}
           onChange={(e) => setBio(e.target.value)}
-          className="clay-input resize-none"
+          className="field-input resize-none"
           placeholder="A sentence or two on who you are and what you build."
         />
       </div>
 
-      <div className="flex items-center gap-3 rounded-clay-sm bg-clay-bg px-4 py-3 shadow-clay-pressed">
+      <div className="flex items-center gap-3 border-2 border-line px-4 py-3">
         <input
           id="available"
           type="checkbox"
@@ -163,28 +161,26 @@ export default function ProfileForm({
       </div>
 
       <div>
-        <label htmlFor="currentFocus" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+        <label htmlFor="currentFocus" className="field-label">
           Currently working on (optional)
         </label>
         <input
           id="currentFocus"
           value={currentFocus}
           onChange={(e) => setCurrentFocus(e.target.value)}
-          className="clay-input"
+          className="field-input"
           placeholder="e.g. Building a Next.js SaaS starter"
         />
       </div>
 
       <div>
-        <p className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
-          Tools / skills
-        </p>
+        <p className="field-label">Tools / skills</p>
         <TechStackPicker value={tools} onChange={setTools} />
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div>
-          <label htmlFor="email" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          <label htmlFor="email" className="field-label">
             Email
           </label>
           <input
@@ -192,11 +188,11 @@ export default function ProfileForm({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="clay-input"
+            className="field-input"
           />
         </div>
         <div>
-          <label htmlFor="githubUrl" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          <label htmlFor="githubUrl" className="field-label">
             GitHub URL
           </label>
           <input
@@ -204,11 +200,11 @@ export default function ProfileForm({
             type="url"
             value={githubUrl}
             onChange={(e) => setGithubUrl(e.target.value)}
-            className="clay-input"
+            className="field-input"
           />
         </div>
         <div>
-          <label htmlFor="linkedinUrl" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          <label htmlFor="linkedinUrl" className="field-label">
             LinkedIn URL
           </label>
           <input
@@ -216,13 +212,13 @@ export default function ProfileForm({
             type="url"
             value={linkedinUrl}
             onChange={(e) => setLinkedinUrl(e.target.value)}
-            className="clay-input"
+            className="field-input"
           />
         </div>
       </div>
 
       {error && (
-        <p className="font-mono text-xs text-warm-dark" role="alert">
+        <p className="font-mono text-xs text-accent" role="alert">
           {error}
         </p>
       )}

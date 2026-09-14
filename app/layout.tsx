@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  variable: "--font-archivo",
+  weight: ["500", "700", "900"],
   display: "swap",
 });
 
@@ -26,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Paolo",
-  description: "A hand-shaped collection of work.",
+  description: "A developer portfolio, built in the open.",
 };
 
 export default function RootLayout({
@@ -37,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} font-body bg-clay-bg text-ink antialiased`}
+        className={`${archivo.variable} ${inter.variable} ${plexMono.variable} font-body bg-paper text-ink antialiased`}
       >
         {children}
       </body>

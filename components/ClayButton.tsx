@@ -9,10 +9,13 @@ interface ClayButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<string, string> = {
-  primary: "bg-clay-surface text-ink hover:text-accent",
-  ghost: "bg-transparent text-ink-soft hover:text-ink shadow-none hover:shadow-clay-raised-sm",
-  warm: "bg-warm text-clay-surface hover:bg-warm-dark",
-  danger: "bg-clay-surface text-warm-dark hover:text-warm-dark",
+  primary:
+    "bg-ink text-paper border-2 border-ink shadow-brutal hover:bg-accent hover:border-accent hover:shadow-brutal-accent",
+  ghost:
+    "bg-paper text-ink border-2 border-ink shadow-brutal-sm hover:bg-ink hover:text-paper",
+  warm: "bg-accent text-paper border-2 border-accent shadow-brutal-accent hover:bg-accent-dark hover:border-accent-dark",
+  danger:
+    "bg-paper text-accent border-2 border-accent shadow-brutal-sm hover:bg-accent hover:text-paper",
 };
 
 export default function ClayButton({
@@ -26,7 +29,7 @@ export default function ClayButton({
 
   return (
     <button
-      className={`${sizeClasses} rounded-clay-sm font-medium tracking-tight shadow-clay-raised-sm transition-all duration-150 ease-out active:shadow-clay-pressed active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      className={`brutal-press ${sizeClasses} font-medium tracking-tight disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ${variantStyles[variant]} ${className}`}
       {...props}
     >
       {children}

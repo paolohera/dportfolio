@@ -3,29 +3,25 @@
 @tailwind utilities;
 
 * {
-  scrollbar-color: #b8b09a #e4e0d6;
+  scrollbar-color: #131313 #e7e5dc;
 }
 
 body {
-  background-color: #e4e0d6;
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(154, 145, 122, 0.14) 1px,
-    transparent 0
-  );
-  background-size: 22px 22px;
+  background-color: #ffffff;
+  background-image: linear-gradient(#13131311 1px, transparent 1px),
+    linear-gradient(90deg, #13131311 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 ::selection {
-  background: #47605c;
-  color: #ede9de;
+  background: #131313;
+  color: #ffffff;
 }
 
 /* Visible keyboard focus everywhere — accessibility floor */
 :focus-visible {
-  outline: 2px solid #47605c;
-  outline-offset: 3px;
-  border-radius: 8px;
+  outline: 3px solid #e5341c;
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -38,11 +34,24 @@ body {
   }
 }
 
-.clay-input {
-  @apply w-full rounded-clay-sm bg-clay-bg px-4 py-3 text-ink placeholder:text-ink-soft/60 shadow-clay-pressed border-none;
+.field-input {
+  @apply w-full border-2 border-line bg-paper px-4 py-3 text-ink placeholder:text-ink-soft/60 outline-none transition-colors;
 }
 
-.clay-input:focus {
-  box-shadow: inset 4px 4px 8px rgba(154, 145, 122, 0.55), inset -4px -4px 8px
-      rgba(255, 255, 255, 0.55), 0 0 0 2px #47605c;
+.field-input:focus {
+  @apply border-accent;
+  box-shadow: 3px 3px 0 0 #131313;
+}
+
+.field-label {
+  @apply mb-1.5 block font-mono text-[11px] text-ink-soft;
+}
+
+/* Reusable hard-shadow "brutal" press interaction */
+.brutal-press {
+  transition: transform 100ms ease-out, box-shadow 100ms ease-out;
+}
+.brutal-press:active {
+  transform: translate(3px, 3px);
+  box-shadow: none !important;
 }

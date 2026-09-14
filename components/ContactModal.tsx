@@ -74,7 +74,7 @@ export default function ContactModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-6"
       role="dialog"
       aria-modal="true"
       aria-label="Contact form"
@@ -82,10 +82,10 @@ export default function ContactModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-md animate-modal-in rounded-clay bg-clay-surface p-8 shadow-clay-raised">
+      <div className="w-full max-w-md animate-modal-in border-2 border-line bg-paper p-8 shadow-brutal-lg">
         {sent ? (
           <div className="py-4 text-center">
-            <p className="font-display text-2xl font-medium text-ink">
+            <p className="font-display text-2xl font-black text-ink">
               Message sent.
             </p>
             <p className="mt-2 text-sm text-ink-soft">
@@ -97,10 +97,8 @@ export default function ContactModal({
           </div>
         ) : (
           <>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
-              Get in touch
-            </p>
-            <h2 className="mt-2 font-display text-2xl font-medium text-ink">
+            <p className="font-mono text-[11px] text-ink-soft">Get in touch</p>
+            <h2 className="mt-2 font-display text-2xl font-black text-ink">
               Let&apos;s talk.
             </h2>
 
@@ -116,7 +114,7 @@ export default function ContactModal({
                   placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="clay-input"
+                  className="field-input"
                 />
               </div>
 
@@ -132,7 +130,7 @@ export default function ContactModal({
                     placeholder="you@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="clay-input"
+                    className="field-input"
                   />
                 </div>
                 <div>
@@ -144,7 +142,7 @@ export default function ContactModal({
                     placeholder="Company (optional)"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    className="clay-input"
+                    className="field-input"
                   />
                 </div>
               </div>
@@ -160,7 +158,7 @@ export default function ContactModal({
                   placeholder="What are you looking to build?"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="clay-input resize-none"
+                  className="field-input resize-none"
                 />
               </div>
 
@@ -179,7 +177,7 @@ export default function ContactModal({
               </div>
 
               {error && (
-                <p className="font-mono text-xs text-warm-dark" role="alert">
+                <p className="font-mono text-xs text-accent" role="alert">
                   {error}
                 </p>
               )}
@@ -197,7 +195,7 @@ export default function ContactModal({
                 Prefer email?{" "}
                 <EmailLink
                   email={fallbackEmail}
-                  className="underline decoration-clay-line underline-offset-4 hover:text-ink"
+                  className="underline decoration-line underline-offset-4 hover:text-ink"
                 >
                   Reach out directly
                 </EmailLink>

@@ -95,23 +95,21 @@ export default function ProjectForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-5 rounded-clay bg-clay-surface p-7 shadow-clay-raised"
+      className="flex flex-col gap-5 border-2 border-line bg-paper p-7"
     >
-      <h3 className="font-display text-xl font-medium text-ink">
+      <h3 className="font-display text-xl font-black text-ink">
         {project ? "Edit piece" : "Add a new piece"}
       </h3>
 
       <div>
-        <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
-          Cover image
-        </label>
+        <label className="field-label">Cover image</label>
         <div className="flex items-center gap-4">
-          <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-clay-sm bg-clay-deep shadow-clay-pressed">
+          <div className="relative h-20 w-32 shrink-0 overflow-hidden border-2 border-line bg-paper-alt">
             {previewUrl ? (
               <Image src={previewUrl} alt="" fill sizes="128px" className="object-cover" />
             ) : null}
           </div>
-          <label className="cursor-pointer rounded-clay-sm bg-clay-bg px-4 py-2 text-sm font-medium text-ink-soft shadow-clay-raised-sm hover:text-ink">
+          <label className="brutal-press cursor-pointer border-2 border-line bg-paper px-4 py-2 text-sm font-medium text-ink shadow-brutal-sm hover:bg-ink hover:text-paper">
             Choose file
             <input
               type="file"
@@ -124,7 +122,7 @@ export default function ProjectForm({
       </div>
 
       <div>
-        <label htmlFor="title" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+        <label htmlFor="title" className="field-label">
           Title
         </label>
         <input
@@ -132,13 +130,13 @@ export default function ProjectForm({
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="clay-input"
+          className="field-input"
           placeholder="Project name"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+        <label htmlFor="description" className="field-label">
           Description
         </label>
         <textarea
@@ -147,14 +145,14 @@ export default function ProjectForm({
           rows={4}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="clay-input resize-none"
+          className="field-input resize-none"
           placeholder="What it is, what it does, what you learned building it."
         />
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="demoUrl" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          <label htmlFor="demoUrl" className="field-label">
             Demo link
           </label>
           <input
@@ -162,12 +160,12 @@ export default function ProjectForm({
             type="url"
             value={demoUrl}
             onChange={(e) => setDemoUrl(e.target.value)}
-            className="clay-input"
+            className="field-input"
             placeholder="https://…"
           />
         </div>
         <div>
-          <label htmlFor="repoUrl" className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
+          <label htmlFor="repoUrl" className="field-label">
             Source link (optional)
           </label>
           <input
@@ -175,21 +173,19 @@ export default function ProjectForm({
             type="url"
             value={repoUrl}
             onChange={(e) => setRepoUrl(e.target.value)}
-            className="clay-input"
+            className="field-input"
             placeholder="https://github.com/…"
           />
         </div>
       </div>
 
       <div>
-        <p className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-ink-soft">
-          Tags
-        </p>
+        <p className="field-label">Tags</p>
         <TechStackPicker value={tags} onChange={setTags} />
       </div>
 
       {error && (
-        <p className="font-mono text-xs text-warm-dark" role="alert">
+        <p className="font-mono text-xs text-accent" role="alert">
           {error}
         </p>
       )}

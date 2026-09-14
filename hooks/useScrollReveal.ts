@@ -21,6 +21,10 @@ export function useScrollReveal<T extends HTMLElement>(
       return;
     }
 
+    const margin = options?.rootMargin
+      ? options.rootMargin
+      : "0px 0px -60px 0px";
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -28,7 +32,7 @@ export function useScrollReveal<T extends HTMLElement>(
           observer.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -60px 0px", ...options }
+      { threshold: 0.15, rootMargin: margin }
     );
 
     observer.observe(node);

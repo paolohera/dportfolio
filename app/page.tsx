@@ -7,8 +7,10 @@ import { useTripleSpacePress } from "@/hooks/useTripleSpacePress";
 import type { Profile, Project } from "@/lib/types";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Reveal from "@/components/Reveal";
+import Navigation from "@/components/Navigation";
 import ProjectGrid from "@/components/ProjectGrid";
+import SkillsSection from "@/components/SkillsSection";
+import ContactSection from "@/components/ContactSection";
 import AdminLoginModal from "@/components/AdminLoginModal";
 import AdminDashboard from "@/components/AdminDashboard";
 import ContactModal from "@/components/ContactModal";
@@ -62,17 +64,32 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
+      <Navigation />
+
       <Hero
+        profile={profile}
         showContact={!!profile?.email}
         onContactClick={() => setShowContact(true)}
       />
-      <Reveal>
+
+      <section id="about-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
         <About profile={profile} />
-      </Reveal>
-      <ProjectGrid projects={projects} name={profile?.name} />
+      </section>
+
+      <section id="skills-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
+        <SkillsSection profile={profile} />
+      </section>
+
+      <section id="work-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
+        <ProjectGrid projects={projects} name={profile?.name} />
+      </section>
+
+      <section id="contact-section" className="mx-auto max-w-6xl px-6 py-20">
+        <ContactSection profile={profile} />
+      </section>
 
       {showHint && (
-        <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 animate-toast-in rounded-full bg-ink px-5 py-2.5 font-mono text-xs text-clay-surface shadow-clay-raised-sm">
+        <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 animate-toast-in border-2 border-line bg-ink px-5 py-2.5 font-mono text-xs text-paper shadow-brutal-sm">
           ● ● ● gesture recognized
         </div>
       )}
@@ -80,7 +97,7 @@ export default function Home() {
       {isAdmin && !showDashboard && (
         <button
           onClick={() => setShowDashboard(true)}
-          className="fixed bottom-6 right-6 z-40 rounded-full bg-accent px-5 py-3 font-mono text-xs uppercase tracking-wide text-clay-surface shadow-clay-raised transition-transform hover:-translate-y-0.5 active:scale-95"
+          className="brutal-press fixed bottom-6 right-6 z-40 border-2 border-line bg-accent px-5 py-3 font-mono text-xs text-paper shadow-brutal"
         >
           Edit portfolio
         </button>
@@ -117,33 +134,18 @@ export default function Home() {
         />
       )}
 
-      <div className="relative mx-auto max-w-6xl px-6 pb-4">
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute -bottom-10 left-0 h-[220px] w-[220px] opacity-30"
-          viewBox="0 0 400 400"
-        >
-          <path
-            fill="#EDE9DE"
-            d="M300.5,299 Q292,368 210,360 Q120,352 88,290 Q52,220 96,150 Q140,78 220,72 Q300,66 330,140 Q358,210 300.5,299 Z"
-          />
-        </svg>
-        <p className="relative font-display text-xl italic text-ink-soft">
-          — born of logic, and a restless heart.
-        </p>
-      </div>
-
-      <footer className="mx-auto max-w-6xl px-6 pb-10 pt-4">
-        <p className="font-mono text-[11px] text-ink-soft/60">
-          Built with Next.js &amp; Supabase.
-        </p>
+      <footer className="mx-auto max-w-6xl px-6 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-ink-soft/70">
+          <span>06 / end of file</span>
+          <span>Built with Next.js &amp; Supabase.</span>
+        </div>
       </footer>
 
       {!isAdmin && (
         <ClayButton
           variant="ghost"
           size="sm"
-          className="sr-only focus:not-sr-only fixed left-6 top-6 z-40"
+          className="sr-only focus:not-sr-only fixed left-6 top-20 z-40"
           onClick={handleTripleSpace}
         >
           Admin login

@@ -1,55 +1,71 @@
+import type { Profile } from "@/lib/types";
 import ContactButton from "./ContactButton";
 
 export default function Hero({
+  profile,
   showContact,
   onContactClick,
 }: {
+  profile?: Profile | null;
   showContact?: boolean;
   onContactClick?: () => void;
 }) {
+ 
+
   return (
-    <header className="relative mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
-      {/* Signature: an organic clay blob sitting behind the headline, like a
-          slab of clay the type has been pressed into. */}
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute -left-16 -top-10 h-[420px] w-[420px] opacity-70 sm:-left-24"
-        viewBox="0 0 400 400"
-      >
-        <path
-          fill="#EDE9DE"
-          d="M300.5,299 Q292,368 210,360 Q120,352 88,290 Q52,220 96,150 Q140,78 220,72 Q300,66 330,140 Q358,210 300.5,299 Z"
-        />
-      </svg>
+    <header
+      id="hero"
+      className="relative mx-auto max-w-6xl border-b-2 border-line px-6 pt-28 pb-16 sm:pb-20"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <p className="font-mono text-xs text-ink-soft">01 / start</p>
+        {showContact && <ContactButton onClick={onContactClick!} />}
+      </div>
 
-      <div className="relative">
-        <div className="flex items-center justify-between gap-4">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink-soft">
-            Selected Work — 2023 / 2026
-          </p>
-          {showContact && <ContactButton onClick={onContactClick!} />}
-        </div>
-
-        <h1 className="mt-6 max-w-3xl font-display text-5xl font-medium leading-[1.05] tracking-tight text-ink sm:text-7xl">
-          Hands of <span className="italic text-accent">Code</span>.
+      <div className="mt-8 max-w-3xl">
+        <h1 className="font-display text-5xl font-black leading-[0.98] tracking-tight text-ink sm:text-7xl">
+          Builds software that ships.
         </h1>
 
-        <p className="mt-8 max-w-lg whitespace-pre-line font-display text-xl italic leading-relaxed text-ink-soft sm:text-2xl">
-          {`Logic and skill in every line,
-Builds a world so clean, so fine.
-With patience, coffee, and quiet nights,
-The developer's mind ignites.
-
-In every function, care is found,
-In every build, purpose bound.
-Fingers that type and debug with grace,
-Craftsmanship in every trace.
-
-A testament to human skill,
-In the code, the heart's own will.
-Development, a modern art,
-Born of logic and a restless heart.`}
+        <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+          {profile?.bio ||
+            "A developer who cares more about working code than polished slides — small, sharp tools, shipped in the open."}
         </p>
+
+        <div className="mt-9 flex flex-wrap items-center gap-3">
+          <a
+            href="#work-section"
+            className="brutal-press border-2 border-line bg-ink px-5 py-2.5 text-sm font-medium text-paper shadow-brutal hover:bg-accent hover:border-accent hover:shadow-brutal-accent"
+          >
+            View the work
+          </a>
+          <a
+            href="#contact-section"
+            className="brutal-press border-2 border-line bg-paper px-5 py-2.5 text-sm font-medium text-ink shadow-brutal-sm hover:bg-ink hover:text-paper"
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line/20 pt-5 font-mono text-xs text-ink-soft">
+        <span className="inline-flex items-center gap-2">
+          <span
+            className={`h-2 w-2 ${
+              profile?.available_for_work ? "bg-good" : "bg-ink-soft"
+            }`}
+            aria-hidden
+          />
+          {profile?.available_for_work
+            ? "Available for new work"
+            : "Not taking new work right now"}
+        </span>
+        {profile?.current_focus && (
+          <span>
+            building: {profile.current_focus}
+            <span className="ml-0.5 inline-block h-3 w-[7px] animate-blink bg-ink align-[-2px]" />
+          </span>
+        )}
       </div>
     </header>
   );
