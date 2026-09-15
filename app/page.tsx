@@ -65,11 +65,7 @@ export default function Home() {
     <main className="relative min-h-screen">
       <Navigation />
 
-      <Hero
-        profile={profile}
-        showContact={!!profile?.email}
-        onContactClick={() => setShowContact(true)}
-      />
+      <Hero profile={profile} />
 
       <section id="about-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
         <About profile={profile} />
