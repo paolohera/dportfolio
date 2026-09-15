@@ -26,6 +26,26 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Paolo",
   description: "A developer portfolio, built in the open.",
+  icons: {
+    icon: [
+      { url: "/icons/pp-logo-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/pp-logo-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/pp-logo-48x48.png", sizes: "48x48", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/pp-logo-180x180.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/icons/favicon.ico",
+    other: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        url: "/icons/pp-logo.svg",
+        sizes: "any",
+      },
+    ],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

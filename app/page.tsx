@@ -1,20 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { useTripleSpacePress } from "@/hooks/useTripleSpacePress";
-import type { Profile, Project } from "@/lib/types";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Navigation from "@/components/Navigation";
-import ProjectGrid from "@/components/ProjectGrid";
-import SkillsSection from "@/components/SkillsSection";
-import ContactSection from "@/components/ContactSection";
-import AdminLoginModal from "@/components/AdminLoginModal";
-import AdminDashboard from "@/components/AdminDashboard";
-import ContactModal from "@/components/ContactModal";
-import ClayButton from "@/components/ClayButton";
+import { supabase } from "@/lib/supabase/client";
+import { useAdminAuth, useTripleSpacePress } from "@/hooks";
+import type { Profile, Project } from "@/types";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Navigation from "@/components/layout/Navigation";
+import ProjectGrid from "@/components/projects/ProjectGrid";
+import SkillsSection from "@/components/sections/SkillsSection";
+import ContactSection from "@/components/sections/ContactSection";
+import AdminLoginModal from "@/components/admin/AdminLoginModal";
+import AdminDashboard from "@/components/admin/AdminDashboard";
+import ContactModal from "@/components/contact/ContactModal";
+import ClayButton from "@/components/ui/ClayButton";
 
 export default function Home() {
   const { isAdmin, signOut } = useAdminAuth();
