@@ -13,8 +13,8 @@ module.exports = {
         ink: "#131313",
         "ink-soft": "#5C5A52",
         line: "#131313",
-        accent: "#E5341C",
-        "accent-dark": "#B8250F",
+        accent: "#AAFF00",
+        "accent-dark": "#88CC00",
         good: "#1F8A4C",
       },
       fontFamily: {
@@ -26,7 +26,7 @@ module.exports = {
         brutal: "4px 4px 0 0 #131313",
         "brutal-sm": "2px 2px 0 0 #131313",
         "brutal-lg": "7px 7px 0 0 #131313",
-        "brutal-accent": "4px 4px 0 0 #E5341C",
+        "brutal-accent": "4px 4px 0 0 #AAFF00",
         "brutal-press": "1px 1px 0 0 #131313",
       },
       borderRadius: {

@@ -7,6 +7,7 @@ export interface Project {
   repo_url: string | null;
   tags: string[];
   sort_order: number;
+  is_featured: boolean;
   created_at: string;
   updated_at: string;
 }

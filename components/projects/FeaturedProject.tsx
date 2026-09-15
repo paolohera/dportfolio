@@ -2,7 +2,13 @@ import Image from "next/image";
 import type { Project } from "@/types";
 import TechBadge from "@/components/skills/TechBadge";
 
-export default function FeaturedProject({ project }: { project: Project }) {
+export default function FeaturedProject({
+  project,
+  label = "Latest — 00",
+}: {
+  project: Project;
+  label?: string;
+}) {
   return (
     <article className="group grid grid-cols-1 border-2 border-line sm:grid-cols-2">
       <div className="relative aspect-[16/11] w-full overflow-hidden border-b-2 border-line bg-paper-alt sm:aspect-auto sm:border-b-0 sm:border-r-2">
@@ -12,7 +18,7 @@ export default function FeaturedProject({ project }: { project: Project }) {
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            className="object-cover"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center font-mono text-xs text-ink-soft">
@@ -22,7 +28,7 @@ export default function FeaturedProject({ project }: { project: Project }) {
       </div>
 
       <div className="flex flex-col justify-center gap-4 p-8 sm:p-10">
-        <p className="font-mono text-[11px] text-accent">Latest — 00</p>
+        <p className="font-mono text-[11px] text-accent">{label}</p>
 
         <h3 className="font-display text-3xl font-black tracking-tight text-ink sm:text-4xl">
           {project.title}

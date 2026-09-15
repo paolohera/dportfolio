@@ -26,6 +26,7 @@ export default function ProjectForm({
   const [imageUrl, setImageUrl] = useState(project?.image_url ?? "");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(project?.image_url ?? "");
+  const [isFeatured, setIsFeatured] = useState(project?.is_featured ?? false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,6 +70,7 @@ export default function ProjectForm({
         demo_url: demoUrl.trim() || null,
         repo_url: repoUrl.trim() || null,
         tags,
+        is_featured: isFeatured,
       };
 
       if (project) {
@@ -182,6 +184,19 @@ export default function ProjectForm({
       <div>
         <p className="field-label">Tags</p>
         <TechStackPicker value={tags} onChange={setTags} />
+      </div>
+
+      <div className="flex items-center gap-3 border-2 border-line px-4 py-3">
+        <input
+          id="isFeatured"
+          type="checkbox"
+          checked={isFeatured}
+          onChange={(e) => setIsFeatured(e.target.checked)}
+          className="h-4 w-4 accent-accent"
+        />
+        <label htmlFor="isFeatured" className="text-sm text-ink-soft">
+          Pin to the featured carousel
+        </label>
       </div>
 
       {error && (

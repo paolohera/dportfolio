@@ -20,7 +20,7 @@ body {
 
 /* Visible keyboard focus everywhere — accessibility floor */
 :focus-visible {
-  outline: 3px solid #e5341c;
+  outline: 3px solid #AAFF00;
   outline-offset: 2px;
 }
 

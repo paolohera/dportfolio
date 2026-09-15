@@ -40,6 +40,7 @@ export default function AdminDashboard({
   );
   const [bulkBusy, setBulkBusy] = useState(false);
   const [reorderingId, setReorderingId] = useState<string | null>(null);
+  const [pinningId, setPinningId] = useState<string | null>(null);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
@@ -92,10 +93,6 @@ export default function AdminDashboard({
     loadMessages();
   }, [loadMessages]);
 
-  // The dashboard is `position: fixed` over the public site, which stays in
-  // the document flow underneath. Without this, the page behind it can still
-  // scroll, showing a browser scrollbar even when the panel itself doesn't
-  // need one.
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -249,6 +246,21 @@ export default function AdminDashboard({
     setReorderingId(null);
     if (e1 || e2) {
       setErrorMessage("Couldn't reorder — try again.");
+      return;
+    }
+    onRefresh();
+  }
+
+  async function toggleFeatured(project: Project) {
+    setPinningId(project.id);
+    const { error } = await supabase
+      .from("projects")
+      .update({ is_featured: !project.is_featured })
+      .eq("id", project.id);
+    setPinningId(null);
+
+    if (error) {
+      setErrorMessage(`Couldn't update: ${error.message}`);
       return;
     }
     onRefresh();
@@ -557,7 +569,7 @@ export default function AdminDashboard({
                   )}
 
                   <div className="mt-4 overflow-x-auto border-2 border-line">
-                    <table className="w-full min-w-[720px] border-collapse text-sm">
+                    <table className="w-full min-w-[760px] border-collapse text-sm">
                       <thead>
                         <tr className="border-b-2 border-line bg-paper-alt font-mono text-[11px] text-ink-soft">
                           <th className="w-10 px-3 py-2.5 text-left">
@@ -574,6 +586,7 @@ export default function AdminDashboard({
                           <th className="w-16 px-3 py-2.5 text-left">Cover</th>
                           <th className="px-3 py-2.5 text-left">Title</th>
                           <th className="px-3 py-2.5 text-left">Tags</th>
+                          <th className="w-16 px-3 py-2.5 text-left">Featured</th>
                           <th className="w-24 px-3 py-2.5 text-left">Order</th>
                           <th className="w-40 px-3 py-2.5 text-right">Actions</th>
                         </tr>
@@ -617,6 +630,29 @@ export default function AdminDashboard({
                               <p className="max-w-[160px] truncate font-mono text-xs text-ink-soft">
                                 {project.tags?.length ? project.tags.join(", ") : "—"}
                               </p>
+                            </td>
+                            <td className="px-3 py-2.5 align-top">
+                              <button
+                                onClick={() => toggleFeatured(project)}
+                                disabled={pinningId === project.id}
+                                aria-label={
+                                  project.is_featured
+                                    ? "Unpin from carousel"
+                                    : "Pin to carousel"
+                                }
+                                title={
+                                  project.is_featured
+                                    ? "Unpin from carousel"
+                                    : "Pin to carousel"
+                                }
+                                className={`border px-2 py-1 text-sm disabled:opacity-40 ${
+                                  project.is_featured
+                                    ? "border-accent bg-accent text-paper"
+                                    : "border-line/30 text-ink-soft hover:border-ink hover:text-ink"
+                                }`}
+                              >
+                                {project.is_featured ? "★" : "☆"}
+                              </button>
                             </td>
                             <td className="px-3 py-2.5 align-top">
                               <div className="flex items-center gap-1 font-mono text-xs">
@@ -664,7 +700,7 @@ export default function AdminDashboard({
                         {filteredProjects.length === 0 && (
                           <tr>
                             <td
-                              colSpan={6}
+                              colSpan={7}
                               className="py-10 text-center font-mono text-xs text-ink-soft/70"
                             >
                               {projects.length === 0
