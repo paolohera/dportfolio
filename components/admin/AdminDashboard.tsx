@@ -3,28 +3,38 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase/client";
-import type { Message, Profile, Project } from "@/types";
+import type { ContactContent, Message, Profile, Project, Service } from "@/types";
 import ClayButton from "@/components/ui/ClayButton";
 import ProjectForm from "@/components/admin/ProjectForm";
 import ProfileForm from "@/components/admin/ProfileForm";
+import ServiceForm from "@/components/admin/ServiceForm";
+import ContactForm from "@/components/admin/ContactForm";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 
 type MessageFilter = "all" | "unread" | "read";
-type Tab = "projects" | "about" | "messages";
+type Tab = "projects" | "about" | "services" | "contact" | "messages";
 
 export default function AdminDashboard({
   projects,
   profile,
+  services,
+  contactContent,
   onClose,
   onRefresh,
   onRefreshProfile,
+  onRefreshServices,
+  onRefreshContact,
   onSignOut,
 }: {
   projects: Project[];
   profile: Profile | null;
+  services: Service[];
+  contactContent: ContactContent | null;
   onClose: () => void;
   onRefresh: () => void;
   onRefreshProfile: () => void;
+  onRefreshServices: () => void;
+  onRefreshContact: () => void;
   onSignOut: () => void;
 }) {
   const [tab, setTab] = useState<Tab>("projects");
@@ -41,6 +51,16 @@ export default function AdminDashboard({
   const [bulkBusy, setBulkBusy] = useState(false);
   const [reorderingId, setReorderingId] = useState<string | null>(null);
   const [pinningId, setPinningId] = useState<string | null>(null);
+
+  const [editingService, setEditingService] = useState<Service | null>(null);
+  const [reorderingServiceId, setReorderingServiceId] = useState<string | null>(
+    null
+  );
+  const [togglingServiceId, setTogglingServiceId] = useState<string | null>(
+    null
+  );
+
+  const [contactDirty, setContactDirty] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
@@ -266,6 +286,49 @@ export default function AdminDashboard({
     onRefresh();
   }
 
+  async function moveService(service: Service, direction: "up" | "down") {
+    const ordered = [...services].sort((a, b) => a.sort_order - b.sort_order);
+    const idx = ordered.findIndex((s) => s.id === service.id);
+    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= ordered.length) return;
+
+    const other = ordered[swapIdx];
+    setReorderingServiceId(service.id);
+
+    const [{ error: e1 }, { error: e2 }] = await Promise.all([
+      supabase
+        .from("services")
+        .update({ sort_order: other.sort_order })
+        .eq("id", service.id),
+      supabase
+        .from("services")
+        .update({ sort_order: service.sort_order })
+        .eq("id", other.id),
+    ]);
+
+    setReorderingServiceId(null);
+    if (e1 || e2) {
+      setErrorMessage("Couldn't reorder — try again.");
+      return;
+    }
+    onRefreshServices();
+  }
+
+  async function toggleServicePublished(service: Service) {
+    setTogglingServiceId(service.id);
+    const { error } = await supabase
+      .from("services")
+      .update({ published: !service.published })
+      .eq("id", service.id);
+    setTogglingServiceId(null);
+
+    if (error) {
+      setErrorMessage(`Couldn't update: ${error.message}`);
+      return;
+    }
+    onRefreshServices();
+  }
+
   async function toggleRead(msg: Message) {
     const { error } = await supabase
       .from("messages")
@@ -367,6 +430,21 @@ export default function AdminDashboard({
   }
 
   function goTo(next: Tab) {
+    if (tab === "contact" && next !== "contact" && contactDirty) {
+      setMobileNavOpen(false);
+      setConfirmDialog({
+        title: "Discard unsaved changes?",
+        message: "Your Contact edits haven't been saved.",
+        confirmLabel: "Discard",
+        variant: "danger",
+        onConfirm: () =>
+          runConfirmed(async () => {
+            setContactDirty(false);
+            setTab(next);
+          }),
+      });
+      return;
+    }
     setTab(next);
     setMobileNavOpen(false);
   }
@@ -374,6 +452,8 @@ export default function AdminDashboard({
   const navItems: { id: Tab; label: string; count?: number; badge?: number }[] = [
     { id: "projects", label: "Projects", count: projects.length },
     { id: "about", label: "About section" },
+    { id: "services", label: "Services", count: services.length },
+    { id: "contact", label: "Contact" },
     { id: "messages", label: "Messages", count: messages.length, badge: unreadCount },
   ];
 
@@ -764,6 +844,151 @@ export default function AdminDashboard({
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {tab === "services" && (
+            <div>
+              <h3 className="hidden font-display text-xl font-black text-ink md:block">
+                Services
+              </h3>
+
+              {editingService ? (
+                <div className="mt-6">
+                  <ServiceForm
+                    key={editingService.id}
+                    service={editingService}
+                    onCancel={() => setEditingService(null)}
+                    onSaved={() => {
+                      setEditingService(null);
+                      onRefreshServices();
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="mt-6 overflow-x-auto border-2 border-line">
+                  <table className="w-full min-w-[640px] border-collapse text-sm">
+                    <thead>
+                      <tr className="border-b-2 border-line bg-paper-alt font-mono text-[11px] text-ink-soft">
+                        <th className="w-14 px-3 py-2.5 text-left">No.</th>
+                        <th className="px-3 py-2.5 text-left">Title</th>
+                        <th className="px-3 py-2.5 text-left">Tags</th>
+                        <th className="w-20 px-3 py-2.5 text-left">Visible</th>
+                        <th className="w-24 px-3 py-2.5 text-left">Order</th>
+                        <th className="w-24 px-3 py-2.5 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {services.map((service) => (
+                        <tr
+                          key={service.id}
+                          className="border-b border-line/20 last:border-b-0 hover:bg-paper-alt/60"
+                        >
+                          <td className="px-3 py-2.5 align-top font-mono text-xs text-ink-soft">
+                            {service.number || "—"}
+                          </td>
+                          <td className="max-w-xs px-3 py-2.5 align-top">
+                            <p className="truncate font-medium text-ink">
+                              {service.title}
+                            </p>
+                            <p className="truncate text-xs text-ink-soft">
+                              {service.description}
+                            </p>
+                          </td>
+                          <td className="px-3 py-2.5 align-top">
+                            <p className="max-w-[200px] truncate font-mono text-xs text-ink-soft">
+                              {service.tags?.length
+                                ? service.tags.join(", ")
+                                : "—"}
+                            </p>
+                          </td>
+                          <td className="px-3 py-2.5 align-top">
+                            <button
+                              onClick={() => toggleServicePublished(service)}
+                              disabled={togglingServiceId === service.id}
+                              aria-label={
+                                service.published
+                                  ? "Hide from site"
+                                  : "Show on site"
+                              }
+                              title={
+                                service.published
+                                  ? "Hide from site"
+                                  : "Show on site"
+                              }
+                              className={`border px-2 py-1 font-mono text-[11px] disabled:opacity-40 ${
+                                service.published
+                                  ? "border-accent bg-accent text-paper"
+                                  : "border-line/30 text-ink-soft hover:border-ink hover:text-ink"
+                              }`}
+                            >
+                              {service.published ? "Live" : "Hidden"}
+                            </button>
+                          </td>
+                          <td className="px-3 py-2.5 align-top">
+                            <div className="flex items-center gap-1 font-mono text-xs">
+                              <button
+                                onClick={() => moveService(service, "up")}
+                                disabled={reorderingServiceId !== null}
+                                aria-label="Move up"
+                                className="border border-line/30 px-1.5 py-0.5 hover:border-ink disabled:opacity-40"
+                              >
+                                ↑
+                              </button>
+                              <button
+                                onClick={() => moveService(service, "down")}
+                                disabled={reorderingServiceId !== null}
+                                aria-label="Move down"
+                                className="border border-line/30 px-1.5 py-0.5 hover:border-ink disabled:opacity-40"
+                              >
+                                ↓
+                              </button>
+                            </div>
+                          </td>
+                          <td className="px-3 py-2.5 align-top">
+                            <div className="flex justify-end">
+                              <button
+                                onClick={() => setEditingService(service)}
+                                className="border border-line/40 px-3 py-1 text-xs font-medium text-ink hover:border-ink"
+                              >
+                                Edit
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+
+                      {services.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className="py-10 text-center font-mono text-xs text-ink-soft/70"
+                          >
+                            No services found — run the services SQL in
+                            Supabase first.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {tab === "contact" && (
+            <div>
+              <h3 className="hidden font-display text-xl font-black text-ink md:block">
+                Contact
+              </h3>
+              <div className="mt-6">
+                <ContactForm
+                  key={contactContent ? "loaded" : "default"}
+                  content={contactContent}
+                  onDirtyChange={setContactDirty}
+                  onSaved={onRefreshContact}
+                />
               </div>
             </div>
           )}

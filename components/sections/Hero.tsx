@@ -10,7 +10,7 @@ export default function Hero({ profile }: { profile?: Profile | null }) {
 
       <div className="mt-8 max-w-3xl">
         <h1 className="font-display text-5xl font-black leading-[0.98] tracking-tight text-ink sm:text-7xl">
-          Builds software that ships.
+        Need something built, fixed, or set up?
         </h1>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

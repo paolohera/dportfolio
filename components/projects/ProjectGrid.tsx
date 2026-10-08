@@ -17,7 +17,7 @@ export default function ProjectGrid({
 
       <p className="font-mono text-xs text-ink-soft">03 / work</p>
       <h2 className="mt-2 font-display text-3xl font-black tracking-tight text-ink">
-        Recent projects
+        Recent Accomplishments
       </h2>
 
       {featuredProjects.length > 0 && (

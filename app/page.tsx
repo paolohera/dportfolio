@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useAdminAuth, useTripleSpacePress } from "@/hooks";
-import type { Profile, Project } from "@/types";
+import type { ContactContent, Profile, Project, Service } from "@/types";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Navigation from "@/components/layout/Navigation";
@@ -19,6 +19,8 @@ export default function Home() {
   const { isAdmin, signOut } = useAdminAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [services, setServices] = useState<Service[]>([]);
+  const [contactContent, setContactContent] = useState<ContactContent | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -44,10 +46,31 @@ export default function Home() {
     if (!error && data) setProfile(data as Profile);
   }, []);
 
+  const loadServices = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("services")
+      .select("*")
+      .order("sort_order", { ascending: true });
+
+    if (!error && data) setServices(data as Service[]);
+  }, []);
+
+  const loadContact = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("contact_content")
+      .select("*")
+      .eq("id", "main")
+      .single();
+
+    if (!error && data) setContactContent(data as ContactContent);
+  }, []);
+
   useEffect(() => {
     loadProjects();
     loadProfile();
-  }, [loadProjects, loadProfile]);
+    loadServices();
+    loadContact();
+  }, [loadProjects, loadProfile, loadServices, loadContact]);
 
   const handleTripleSpace = useCallback(() => {
     if (isAdmin) {
@@ -71,16 +94,16 @@ export default function Home() {
         <About profile={profile} />
       </section>
 
+      <section id="services-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
+        <ServicesSection services={services} />
+      </section>
+
       <section id="work-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
         <ProjectGrid projects={projects} name={profile?.name} />
       </section>
-      
-      <section id="services-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
-        <ServicesSection />
-      </section>
-      
+
       <section id="contact-section" className="mx-auto max-w-6xl px-6 py-20">
-        <ContactSection profile={profile} />
+        <ContactSection profile={profile} content={contactContent} />
       </section>
 
       {showHint && (
@@ -119,9 +142,13 @@ export default function Home() {
         <AdminDashboard
           projects={projects}
           profile={profile}
+          services={services}
+          contactContent={contactContent}
           onClose={() => setShowDashboard(false)}
           onRefresh={loadProjects}
           onRefreshProfile={loadProfile}
+          onRefreshServices={loadServices}
+          onRefreshContact={loadContact}
           onSignOut={async () => {
             await signOut();
             setShowDashboard(false);
