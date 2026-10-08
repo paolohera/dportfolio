@@ -30,7 +30,7 @@ export default function Navigation() {
     );
 
     const sections = document.querySelectorAll(
-      '#about-section, #work-section, #skills-section, #contact-section'
+      '#about-section, #work-section, #services-section, #contact-section'
     );
     sections.forEach((section) => observer.observe(section));
 
@@ -70,11 +70,11 @@ export default function Navigation() {
             Work
           </NavLink>
           <NavLink
-            href="#skills-section"
-            active={activeSection === "skills"}
-            onClick={() => setActiveSection("skills")}
+            href="#services-section"
+            active={activeSection === "services"}
+            onClick={() => setActiveSection("services")}
           >
-            Skills
+            Services
           </NavLink>
           <NavLink
             href="#contact-section"

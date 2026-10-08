@@ -23,9 +23,26 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const SITE_URL = "https://pao-lo.vercel.app";
+const SITE_NAME = "Paolo Patigdas";
+
 export const metadata: Metadata = {
-  title: "Paolo",
-  description: "A developer portfolio, built in the open.",
+  title: {
+    default: "Paolo Patigdas | Software Developer",
+    template: "%s | Paolo Patigdas",
+  },
+  description:
+    "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+  keywords:
+    "Paolo Patigdas, Paolo Patigdas developer, Paolo Patigdas software developer, Paolo Patigdas portfolio, software developer, web developer, Next.js developer, React developer, TypeScript developer",
+  authors: [
+    {
+      name: "Paolo Patigdas",
+    },
+  ],
+  creator: "Paolo Patigdas",
+  publisher: "Paolo Patigdas",
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: [
       { url: "/icons/pp-logo-32x32.png", sizes: "32x32", type: "image/png" },
@@ -46,6 +63,30 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/site.webmanifest",
+  openGraph: {
+    title: "Paolo Patigdas | Software Developer",
+    description:
+      "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Paolo Patigdas - Software Developer - Builds software that ships.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paolo Patigdas | Software Developer",
+    description:
+      "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+    images: ["/images/og-image.png"],
+    siteId: "",
+    creator: "",
+  },
 };
 
 export default function RootLayout({
@@ -59,6 +100,32 @@ export default function RootLayout({
         className={`${archivo.variable} ${inter.variable} ${plexMono.variable} font-body bg-paper text-ink antialiased`}
       >
         {children}
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Paolo Patigdas",
+    "url": "https://pao-lo.vercel.app",
+    "jobTitle": "Software Developer"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Paolo Patigdas",
+    "url": "https://pao-lo.vercel.app",
+    "description": "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships."
+  }
+  </script>
+            `,
+          }}
+        />
       </body>
     </html>
   );

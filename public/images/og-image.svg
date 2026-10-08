@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#131313"/>
+  <rect width="1200" height="50" fill="#AAFF00" x="0" y="580"/>
+  <text x="600" y="595" fill="#131313" font-family="Archivo, sans-serif" font-size="40" font-weight="900" text-anchor="middle" letter-spacing="-0.02em">
+    PAOLO PATIGDAS
+  </text>
+  <text x="600" y="625" fill="#131313" font-family="Archivo, sans-serif" font-size="25" font-weight="900" text-anchor="middle" letter-spacing="-0.02em">
+    Software Developer
+  </text>
+  <text x="600" y="350" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="500" text-anchor="middle" letter-spacing="0.15em">
+    Builds software that ships.
+  </text>
+</svg>

@@ -8,7 +8,7 @@ import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Navigation from "@/components/layout/Navigation";
 import ProjectGrid from "@/components/projects/ProjectGrid";
-import SkillsSection from "@/components/sections/SkillsSection";
+import ServicesSection from "@/components/sections/ServicesSection";
 import ContactSection from "@/components/sections/ContactSection";
 import AdminLoginModal from "@/components/admin/AdminLoginModal";
 import AdminDashboard from "@/components/admin/AdminDashboard";
@@ -71,14 +71,14 @@ export default function Home() {
         <About profile={profile} />
       </section>
 
-      <section id="skills-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
-        <SkillsSection profile={profile} />
-      </section>
-
       <section id="work-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
         <ProjectGrid projects={projects} name={profile?.name} />
       </section>
-
+      
+      <section id="services-section" className="mx-auto max-w-6xl border-b-2 border-line px-6 py-20">
+        <ServicesSection />
+      </section>
+      
       <section id="contact-section" className="mx-auto max-w-6xl px-6 py-20">
         <ContactSection profile={profile} />
       </section>
