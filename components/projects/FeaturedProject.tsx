@@ -54,7 +54,7 @@ export default function FeaturedProject({
               rel="noopener noreferrer"
               className="brutal-press border-2 border-line bg-ink px-5 py-2.5 text-sm font-medium text-paper shadow-brutal-sm hover:bg-accent hover:border-accent"
             >
-              View demo
+             Visit
             </a>
           )}
           {project.repo_url && (

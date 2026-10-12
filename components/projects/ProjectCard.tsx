@@ -57,7 +57,7 @@ export default function ProjectCard({
               rel="noopener noreferrer"
               className="text-sm font-medium text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent"
             >
-              View demo
+              Visit
             </a>
           )}
           {project.repo_url && (

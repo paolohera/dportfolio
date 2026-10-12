@@ -9,6 +9,8 @@ import ProjectForm from "@/components/admin/ProjectForm";
 import ProfileForm from "@/components/admin/ProfileForm";
 import ServiceForm from "@/components/admin/ServiceForm";
 import ContactForm from "@/components/admin/ContactForm";
+import ChatInbox from "@/components/admin/chat/ChatInbox";
+import { useChatAdmin } from "@/components/admin/chat/useChatAdmin";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 
 type MessageFilter = "all" | "unread" | "read";
@@ -61,6 +63,10 @@ export default function AdminDashboard({
   );
 
   const [contactDirty, setContactDirty] = useState(false);
+
+  // One realtime subscription for the whole Admin Studio session
+  const chat = useChatAdmin();
+  const [messagesView, setMessagesView] = useState<"form" | "chat">("form");
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
@@ -454,7 +460,12 @@ export default function AdminDashboard({
     { id: "about", label: "About section" },
     { id: "services", label: "Services", count: services.length },
     { id: "contact", label: "Contact" },
-    { id: "messages", label: "Messages", count: messages.length, badge: unreadCount },
+    {
+      id: "messages",
+      label: "Messages",
+      count: messages.length + chat.conversations.length,
+      badge: unreadCount + chat.unreadTotal,
+    },
   ];
 
   const activeLabel = navItems.find((n) => n.id === tab)?.label ?? "";
@@ -998,7 +1009,39 @@ export default function AdminDashboard({
               <h3 className="hidden font-display text-xl font-black text-ink md:block">
                 Messages
               </h3>
+              <div className="mt-6 flex w-fit border-2 border-line font-mono text-xs">
+                <button
+                  onClick={() => setMessagesView("form")}
+                  className={`px-3 py-1.5 ${
+                    messagesView === "form"
+                      ? "bg-ink text-paper"
+                      : "text-ink-soft hover:text-ink"
+                  }`}
+                >
+                  Contact form{unreadCount > 0 ? ` (${unreadCount})` : ""}
+                </button>
+                <button
+                  onClick={() => setMessagesView("chat")}
+                  className={`px-3 py-1.5 ${
+                    messagesView === "chat"
+                      ? "bg-ink text-paper"
+                      : "text-ink-soft hover:text-ink"
+                  }`}
+                >
+                  Live chat{chat.unreadTotal > 0 ? ` (${chat.unreadTotal})` : ""}
+                </button>
+              </div>
+            </div>
+          )}
 
+          {tab === "messages" && messagesView === "chat" && (
+            <div className="mt-6">
+              <ChatInbox chat={chat} active />
+            </div>
+          )}
+
+          {tab === "messages" && messagesView === "form" && (
+            <div>
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <div className="flex border-2 border-line font-mono text-xs">
                   {(["all", "unread", "read"] as MessageFilter[]).map((f) => (

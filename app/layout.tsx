@@ -26,6 +26,23 @@ const plexMono = IBM_Plex_Mono({
 const SITE_URL = "https://pao-lo.vercel.app";
 const SITE_NAME = "Paolo Patigdas";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Paolo Patigdas",
+  url: SITE_URL,
+  jobTitle: "Software Developer",
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Paolo Patigdas",
+  url: SITE_URL,
+  description:
+    "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Paolo Patigdas | Software Developer",
@@ -102,29 +119,12 @@ export default function RootLayout({
         {children}
 
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Paolo Patigdas",
-    "url": "https://pao-lo.vercel.app",
-    "jobTitle": "Software Developer"
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Paolo Patigdas",
-    "url": "https://pao-lo.vercel.app",
-    "description": "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships."
-  }
-  </script>
-            `,
-          }}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </body>
     </html>

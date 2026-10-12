@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase/client";
 import { useAdminAuth, useTripleSpacePress } from "@/hooks";
 import type { ContactContent, Profile, Project, Service } from "@/types";
@@ -14,6 +15,11 @@ import AdminLoginModal from "@/components/admin/AdminLoginModal";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import ContactModal from "@/components/contact/ContactModal";
 import ClayButton from "@/components/ui/ClayButton";
+
+// Loaded on demand so the chat never slows the first page load
+const ChatWidget = dynamic(() => import("@/components/chat/ChatWidget"), {
+  ssr: false,
+});
 
 export default function Home() {
   const { isAdmin, signOut } = useAdminAuth();
@@ -162,6 +168,11 @@ export default function Home() {
           <span>Built with Next.js &amp; Supabase.</span>
         </div>
       </footer>
+
+      <ChatWidget
+        raised={isAdmin && !showDashboard}
+        ownerName={profile?.name?.split(" ")[0] || "Paolo"}
+      />
 
       {!isAdmin && (
         <ClayButton
