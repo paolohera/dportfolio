@@ -113,7 +113,7 @@ export default function Home() {
       <footer className="mx-auto max-w-6xl px-6 py-8">
         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-ink-soft/70">
           <span>06 / end of file</span>
-          <span>Built with Next.js &amp; Supabase.</span>
+          <span>© 2026 Paolo Hera. All rights reserved.</span>
         </div>
       </footer>
 

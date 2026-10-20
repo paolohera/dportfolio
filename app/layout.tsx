@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Archivo, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
@@ -23,7 +24,7 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://pao-lo.vercel.app";
+const SITE_URL = "https://paolopatigdas.vercel.app";
 const SITE_NAME = "Paolo Patigdas";
 
 const personJsonLd = {
@@ -31,35 +32,73 @@ const personJsonLd = {
   "@type": "Person",
   name: "Paolo Patigdas",
   url: SITE_URL,
-  jobTitle: "Software Developer",
+  jobTitle: "IT Specialist and Web Developer",
+  description:
+    "IT professional working across technical support, computer troubleshooting, system administration, and web application development.",
+  mainEntityOfPage: SITE_URL,
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Paolo Patigdas",
+  name: SITE_NAME,
   url: SITE_URL,
   description:
-    "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+    "The professional portfolio of Paolo Patigdas, featuring IT support, technical troubleshooting, web development, and technology projects.",
+  inLanguage: "en",
+  publisher: {
+    "@type": "Person",
+    name: SITE_NAME,
+    url: SITE_URL,
+  },
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+
   title: {
-    default: "Paolo Patigdas | Software Developer",
+    default: "Paolo Patigdas | IT Specialist & Web Developer",
     template: "%s | Paolo Patigdas",
   },
+
   description:
-    "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
-  keywords:
-    "Paolo Patigdas, Paolo Patigdas developer, Paolo Patigdas software developer, Paolo Patigdas portfolio, software developer, web developer, Next.js developer, React developer, TypeScript developer",
-  authors: [
-    {
-      name: "Paolo Patigdas",
-    },
+    "Explore the portfolio of Paolo Patigdas, an IT professional specializing in technical support, computer troubleshooting, system administration, and web development.",
+
+  applicationName: SITE_NAME,
+
+  keywords: [
+    "Paolo Patigdas",
+    "Paolo Patigdas portfolio",
+    "Paolo Patigdas IT",
+    "Paolo Patigdas web developer",
+    "IT specialist",
+    "IT support and troubleshooting",
+    "computer troubleshooting",
+    "system administration",
+    "web development",
+    "Next.js developer",
   ],
-  creator: "Paolo Patigdas",
-  publisher: "Paolo Patigdas",
-  metadataBase: new URL(SITE_URL),
+
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+
+  alternates: {
+    canonical: "/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
   icons: {
     icon: [
       { url: "/icons/pp-logo-32x32.png", sizes: "32x32", type: "image/png" },
@@ -79,30 +118,33 @@ export const metadata: Metadata = {
       },
     ],
   },
+
   manifest: "/site.webmanifest",
+
   openGraph: {
-    title: "Paolo Patigdas | Software Developer",
+    type: "website",
+    title: "Paolo Patigdas | IT Specialist & Web Developer",
     description:
-      "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+      "Discover Paolo Patigdas's work in IT specialist, technical troubleshooting, system administration, and web development.",
     url: SITE_URL,
     siteName: SITE_NAME,
+    locale: "en_PH",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Paolo Patigdas - Software Developer - Builds software that ships.",
+        alt: "Paolo Patigdas — IT Specialist and Web Developer",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Paolo Patigdas | Software Developer",
+    title: "Paolo Patigdas | IT Specialist & Web Developer",
     description:
-      "Paolo Patigdas is a software developer who builds modern, reliable web applications and software that ships.",
+      "IT specialist, troubleshooting, system administration, and web development by Paolo Patigdas.",
     images: ["/images/og-image.png"],
-    siteId: "",
-    creator: "",
   },
 };
 
@@ -112,7 +154,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en-PH">
       <body
         className={`${archivo.variable} ${inter.variable} ${plexMono.variable} font-body bg-paper text-ink antialiased`}
       >
@@ -120,11 +162,16 @@ export default function RootLayout({
 
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
+
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
       </body>
     </html>

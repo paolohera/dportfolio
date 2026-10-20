@@ -31,6 +31,7 @@ const CURATED_TOOLS = [
   "AWS",
   "Vercel",
   "Netlify",
+  "lua",
 ];
 
 export default function TechStackPicker({
