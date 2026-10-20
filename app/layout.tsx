@@ -56,6 +56,10 @@ const websiteJsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
+    verification: {
+    google: "BURZozWb4_t9ekcZng6AEfuHdnwurRkSvJoxwX8X78k",
+  },
+    
   title: {
     default: "Paolo Patigdas | IT Specialist & Web Developer",
     template: "%s | Paolo Patigdas",
